@@ -9,8 +9,6 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
-import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,16 +24,12 @@ public class ParticipantController {
     private final Logger logger = LoggerFactory.getLogger(ParticipantController.class);
 
     @GetMapping({"/list", "/"})
-    public ModelAndView getAllEmployees() {
+    public ModelAndView getAllParticipants() {
         ModelAndView mv = new ModelAndView("list-participants");
         mv.addObject("participants", getParticipants());
         return mv;
     }
 
-//    @RequestMapping("/")
-//    public ModelAndView getTournamentSimulatorPage() {
-//        return new ModelAndView("tournamentSimulator.html");
-//    }
     @PostMapping("/addParticipant")
     public Participant saveParticipant(@Valid @RequestBody Participant participant) throws ParticipantNameAlreadyExistException {
         logger.info("Invoking save participant");
@@ -63,11 +57,6 @@ public class ParticipantController {
     private List<Participant> getParticipants() {
         return participantService.getParticipantList();
     }
-
-//    @RequestMapping(value = "/data/users", method = RequestMethod.GET)
-//    public DataTablesOutput<Participant> getUsers(@Valid DataTablesInput input) {
-//        return participantService.findAll(input);
-//    }
 
 
 }
