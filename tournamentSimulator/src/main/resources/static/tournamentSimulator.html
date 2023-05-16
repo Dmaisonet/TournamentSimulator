@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
+<!--      xmlns:th="http://www.thymeleaf.org">-->
+<html>
+<head style="text-align:center;">
+    <h2> Tournament Simulator </h2>
+    <meta charset="utf-8" />
+    <title>Tournament Simulator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="jquery.spring-friendly.js" />
+    <script src="/static/tournamentSimulator.js"></script>
+</head>
+<body style="text-align:center;">
+    <div>
+        <input type="text" id="username" name="username" placeholder="username">
+        <button type="submit" class="btn btn-primary" style="width: 150px; margin-bottom: 10px"> Add new Participant </button>
+    </div>
+    <div>
+        <input type="text" id="usernameToRemove" name="username" placeholder="username">
+        <button type="submit" class="btn btn-primary" style="width: 150px"> Remove Participant </button>
+    </div>
+<!--    Table-->
+    <h1>LeaderBoard</h1>
+    <table id="participantTable" class="display">
+
+        <!-- Header Table -->
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Wins</th>
+            <th>Losses</th>
+            <th>TournamentWins</th>
+        </tr>
+        </thead>
+        <!-- Footer Table -->
+<!--        <tfoot>-->
+<!--        <tr>-->
+<!--            <th>Id</th>-->
+<!--            <th>Username</th>-->
+<!--            <th>Wins</th>-->
+<!--            <th>Losses</th>-->
+<!--            <th>TournamentWins</th>-->
+<!--        </tr>-->
+<!--        </tfoot>-->
+    </table>
+</body>
+</html>

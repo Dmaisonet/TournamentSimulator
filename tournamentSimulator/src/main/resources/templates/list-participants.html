@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Tournament Simulator</title>
+    <h2> Tournament Simulator </h2>
+
+    <link rel="stylesheet"
+          type="text/css"
+          href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+          crossorigin="anonymous" />
+</head>
+
+<body style="text-align:center;">
+
+<div>
+    <input type="text" id="usernameToAdd" name="username" placeholder="username">
+    <button type="submit" class="btn btn-primary" style="width: 100px; margin-bottom: 10px" onclick="addParticipant()"> Add new Participant </button>
+</div>
+<div>
+    <input type="text" id="usernameToRemove" name="username" placeholder="username">
+    <button type="submit" class="btn btn-primary" style="width: 100px" onclick="removeParticipant()"> Remove Participant </button>
+</div>
+
+<div id="TableDiv" class="container">
+
+    <h3>List Employees</h3>
+
+    <table class="table table-bordered table-striped" id="participantTable">
+
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Wins</th>
+            <th>Losses</th>
+            <th>Tournament Wins</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="participant: ${participants}">
+            <td th:text="${participant.username}" />
+            <td th:text="${participant.wins}" />
+            <td th:text="${participant.loss}" />
+            <td th:text="${participant.tournamentWins}" />
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
+<!--<script type="text/javascript" th:src="@{/static/tournamentSimulator.js}"></script>-->
+<script>
+		$(document).ready(function() {
+			$("#participantTable").DataTable({
+					'aoColumnDefs': [{
+        			'bSortable': false,
+        			'aTargets': [0] /* 1st one, start by the right */
+    			}]
+			});
+		})
+</script>
+<script th:inline="javascript">
+
+    function addParticipant() {
+        var username = $('#usernameToAdd').val();
+        if(username.length === 0) {
+            alert("Please enter a proper username");
+            return;
+        }
+        const participant = {username: username,
+                    wins: 0,
+                    loss: 0,
+                    tournamentWins: 0}
+        $.ajax({
+            type: "POST",
+            url: "/addParticipant",
+            data: JSON.stringify(participant),
+            contentType: "application/json",
+            }).done(function (data) {
+                alert("Participant: " + username + " has been added!");
+            }).fail(function (xhr, status, error) {
+                alert("Error: " + error + "Status code:" + xhr.status + ")\n"
+                +xhr.responseText);
+            })
+    }
+
+    function removeParticipant() {
+        var participantName = $('#usernameToRemove').val();
+        if(participantName.length === 0) {
+            alert("Please enter a proper username");
+            return;
+        }
+
+        $.ajax({
+            type: "DELETE",
+            url: "/deleteParticipant",
+            data: {participantName: participantName}
+            }).done(function () {
+                alert("Participant: " + username + " has been removed!");
+            }).fail(function (xhr, status, error) {
+                alert("Error: " + error + "Status code:" + xhr.status + ")\n"
+                +xhr.responseText);
+            })
+    }
+
+
+</script>
+</body>
+
+</html>
